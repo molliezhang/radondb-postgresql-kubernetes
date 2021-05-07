@@ -112,7 +112,7 @@ pipeline {
         IMAGE_NAME = 'postgresql-repmgr'
         TEST_LOCAL_PORT = 5432
         DEPLOY_PROD = false
-        PARAMETERS_FILE = "${JENKINS_HOME}/parameters.groovy"
+        // PARAMETERS_FILE = "${JENKINS_HOME}/parameters.groovy"
     }
 
     parameters {
@@ -151,20 +151,20 @@ pipeline {
                         url: 'https://github.com/zhl003/radondb-postgresql-kubernetes.git'
 
                 // Validate kubectl
-                sh "kubectl cluster-info"
+                //sh "kubectl cluster-info"
 
                 // Init helm client
                 sh "helm init"
 
                 // Make sure parameters file exists
-                script {
-                    if (! fileExists("${PARAMETERS_FILE}")) {
-                        echo "ERROR: ${PARAMETERS_FILE} is missing!"
-                    }
-                }
+                // script {
+                //     if (! fileExists("${PARAMETERS_FILE}")) {
+                //         echo "ERROR: ${PARAMETERS_FILE} is missing!"
+                //     }
+                // }
 
                 // Load Docker registry and Helm repository configurations from file
-                load "${JENKINS_HOME}/parameters.groovy"
+                // load "${JENKINS_HOME}/parameters.groovy"
 
                 echo "DOCKER_REG is ${DOCKER_REG}"
                 echo "HELM_REPO  is ${HELM_REPO}"
