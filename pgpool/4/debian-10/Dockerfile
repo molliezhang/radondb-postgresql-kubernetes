@@ -1,4 +1,4 @@
-FROM docker.io/bitnami/minideb:buster
+FROM docker.io/zhonghl003/minideb:buster
 
 ENV HOME="/" \
     OS_ARCH="amd64" \
