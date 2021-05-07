@@ -194,7 +194,7 @@ postgresql:
     key: ""
     ## Node label values to match
     ## E.g.
-    ## values:
+    ## values:  
     ##   - e2e-az1
     ##   - e2e-az2
     ##
