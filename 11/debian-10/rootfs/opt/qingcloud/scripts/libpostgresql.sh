@@ -929,6 +929,7 @@ postgresql_configure_logging() {
 #########################
 postgresql_configure_connections() {
     [[ -n "$POSTGRESQL_MAX_CONNECTIONS" ]] && postgresql_set_property "max_connections" "$POSTGRESQL_MAX_CONNECTIONS"
+    [[ -z "$POSTGRESQL_MAX_CONNECTIONS" ]] && postgresql_set_property "max_connections" "$(("$(get_total_memory)" / 16))"
     [[ -n "$POSTGRESQL_TCP_KEEPALIVES_IDLE" ]] && postgresql_set_property "tcp_keepalives_idle" "$POSTGRESQL_TCP_KEEPALIVES_IDLE"
     [[ -n "$POSTGRESQL_TCP_KEEPALIVES_INTERVAL" ]] && postgresql_set_property "tcp_keepalives_interval" "$POSTGRESQL_TCP_KEEPALIVES_INTERVAL"
     [[ -n "$POSTGRESQL_TCP_KEEPALIVES_COUNT" ]] && postgresql_set_property "tcp_keepalives_count" "$POSTGRESQL_TCP_KEEPALIVES_COUNT"
@@ -948,6 +949,20 @@ postgresql_configure_timezone() {
     ([[ -n "$POSTGRESQL_TIMEZONE" ]] && postgresql_set_property "timezone" "$POSTGRESQL_TIMEZONE") || true
 }
 
+########################
+# Configure shared_buffers
+# Globals:
+#   None
+# Arguments:
+#   None
+# Returns:
+#   Boolean
+#########################
+postgresql_configure_shared_buffers(){
+    os_total_memory="$(get_total_memory)"
+    shared_buffers=$((os_total_memory / 4))
+    ([[ -z "$POSTGRESQL_SHARED_BUFFERS" ]] && postgresql_set_property "shared_buffers" "$shared_buffers") || true
+}
 ########################
 # Remove pg_hba.conf lines based on filter
 # Globals:

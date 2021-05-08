@@ -359,6 +359,7 @@ repmgr_inject_postgresql_configuration() {
     postgresql_set_property "archive_command" "/bin/true"
     postgresql_configure_connections
     postgresql_configure_timezone
+    postgresql_configure_shared_buffers
     # Redirect logs to POSTGRESQL_LOG_FILE
     postgresql_configure_logging
     postgresql_set_property "logging_collector" "on"
