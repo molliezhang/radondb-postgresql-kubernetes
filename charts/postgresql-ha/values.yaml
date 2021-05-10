@@ -271,11 +271,20 @@ postgresql:
 
   ## Extra volumes to add to the deployment
   ##
-  extraVolumes: []
+  # extraVolumes: []
+  extraVolumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+        sizeLimit: 512Mi
+
 
   ## Extra volume mounts to add to the container
   ##
-  extraVolumeMounts: []
+  # extraVolumeMounts: []
+  extraVolumeMounts:
+    - name: dshm
+      mountPath: /dev/shm
 
   ## Extra init containers to add to the deployment
   ##
@@ -368,7 +377,7 @@ postgresql:
 
   ## Synchronous replication
   ##
-  syncReplication: false
+  syncReplication: true
 
   ## Repmgr configuration parameters
   ##

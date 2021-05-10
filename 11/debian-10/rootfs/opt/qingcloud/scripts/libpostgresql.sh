@@ -960,8 +960,8 @@ postgresql_configure_timezone() {
 #########################
 postgresql_configure_shared_buffers(){
     os_total_memory="$(get_total_memory)"
-    shared_buffers=$((os_total_memory / 4))
-    ([[ -z "$POSTGRESQL_SHARED_BUFFERS" ]] && postgresql_set_property "shared_buffers" "$shared_buffers") || true
+    shared_buffers=$((os_total_memory / 4))MB
+    postgresql_set_property "shared_buffers" "$shared_buffers" || true
 }
 ########################
 # Remove pg_hba.conf lines based on filter

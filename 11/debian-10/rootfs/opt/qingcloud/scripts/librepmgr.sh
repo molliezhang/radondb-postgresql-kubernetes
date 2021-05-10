@@ -11,7 +11,6 @@
 . /opt/qingcloud/scripts/libos.sh
 . /opt/qingcloud/scripts/libvalidations.sh
 . /opt/qingcloud/scripts/libnet.sh
-set -ex 
 ########################
 # Get repmgr node id
 # Globals:
