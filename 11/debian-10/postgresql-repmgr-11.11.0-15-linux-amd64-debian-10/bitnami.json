@@ -1,0 +1,10 @@
+{
+    "id": "com.bitnami.postgresql-repmgr",
+    "name": "postgresql-repmgr",
+    "author":     {
+        "name": "Bitnami",
+        "url": "https://bitnami.com"
+    },
+    "version": "11.11",
+    "revision": "15"
+}

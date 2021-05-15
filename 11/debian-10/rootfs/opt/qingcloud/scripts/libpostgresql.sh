@@ -329,6 +329,7 @@ EOF
 #   None
 #########################
 postgresql_set_property() {
+
     local -r property="${1:?missing property}"
     local -r value="${2:?missing value}"
     local -r conf_file="${3:-$POSTGRESQL_CONF_FILE}"
@@ -338,6 +339,7 @@ postgresql_set_property() {
     else
         echo "${property} = '${value}'" >>"$conf_file"
     fi
+    info "Setting ${property} = '${value}'"
 }
 
 ########################
@@ -388,9 +390,19 @@ postgresql_configure_replication_parameters() {
 #   None
 #########################
 postgresql_configure_synchronous_replication() {
+    # local sync_nodes_except_myself=()
+    # local _sync_nodes_except_myself
+    # read -r -a nodes <<<"$(tr ',;' ' ' <<<"${REPMGR_PARTNER_NODES}")"
+    # for node in "${nodes[@]}"; do
+    #     if ! [[ "$node" = "$REPMGR_NODE_NAME" ]]; then
+    #         sync_nodes_except_myself+=(",${node%%.*}")
+    #     fi
+    # done
+    # _sync_nodes_except_myself=${sync_nodes_except_myself[*]}
+    # _sync_nodes_except_myself=${_sync_nodes_except_myself#*,}
     if ((POSTGRESQL_NUM_SYNCHRONOUS_REPLICAS > 0)); then
         postgresql_set_property "synchronous_commit" "$POSTGRESQL_SYNCHRONOUS_COMMIT_MODE"
-        postgresql_set_property "synchronous_standby_names" "${POSTGRESQL_NUM_SYNCHRONOUS_REPLICAS} (\"${POSTGRESQL_CLUSTER_APP_NAME}\")"
+        postgresql_set_property "synchronous_standby_names" "FIRST ${POSTGRESQL_NUM_SYNCHRONOUS_REPLICAS} (*)"
     fi
 }
 
@@ -588,7 +600,7 @@ postgresql_initialize() {
         is_boolean_yes "$create_conf_file" && postgresql_configure_fsync
         is_boolean_yes "$create_conf_file" && is_boolean_yes "$POSTGRESQL_ENABLE_TLS" && postgresql_configure_tls
         [[ "$POSTGRESQL_REPLICATION_MODE" = "master" ]] && [[ -n "$POSTGRESQL_REPLICATION_USER" ]] && is_boolean_yes "$create_pghba_file" && postgresql_add_replication_to_pghba
-        [[ "$POSTGRESQL_REPLICATION_MODE" = "master" ]] && is_boolean_yes "$create_pghba_file" && postgresql_configure_synchronous_replication
+        [[ "$POSTGRESQL_REPLICATION_MODE" = "master" ]] && postgresql_configure_synchronous_replication
         [[ "$POSTGRESQL_REPLICATION_MODE" = "slave" ]] && postgresql_configure_recovery
     else
         if [[ "$POSTGRESQL_REPLICATION_MODE" = "master" ]]; then
@@ -606,7 +618,6 @@ postgresql_initialize() {
             is_boolean_yes "$create_pghba_file" && postgresql_restrict_pghba
             [[ -n "$POSTGRESQL_REPLICATION_USER" ]] && postgresql_create_replication_user
             is_boolean_yes "$create_conf_file" && postgresql_configure_replication_parameters
-            is_boolean_yes "$create_pghba_file" && postgresql_configure_synchronous_replication
             is_boolean_yes "$create_conf_file" && postgresql_configure_fsync
             is_boolean_yes "$create_conf_file" && is_boolean_yes "$POSTGRESQL_ENABLE_TLS" && postgresql_configure_tls
             [[ -n "$POSTGRESQL_REPLICATION_USER" ]] && is_boolean_yes "$create_pghba_file" && postgresql_add_replication_to_pghba
@@ -958,7 +969,7 @@ postgresql_configure_timezone() {
 # Returns:
 #   Boolean
 #########################
-postgresql_configure_shared_buffers(){
+postgresql_configure_shared_buffers() {
     os_total_memory="$(get_total_memory)"
     shared_buffers=$((os_total_memory / 4))MB
     postgresql_set_property "shared_buffers" "$shared_buffers" || true
@@ -1031,17 +1042,17 @@ postgresql_execute_print_output() {
     local -r user="${2:-postgres}"
     local -r pass="${3:-}"
     local opts
-    read -r -a opts <<< "${@:4}"
+    read -r -a opts <<<"${@:4}"
 
     local args=("-U" "$user")
     [[ -n "$db" ]] && args+=("-d" "$db")
-    [[ "${#opts[@]}" -gt 0 ]] && args+=( "${opts[@]}" )
+    [[ "${#opts[@]}" -gt 0 ]] && args+=("${opts[@]}")
 
     # Obtain the command specified via stdin
     local sql_cmd
-    sql_cmd="$(< /dev/stdin)"
+    sql_cmd="$(</dev/stdin)"
     debug "Executing SQL command:\n$sql_cmd"
-    PGPASSWORD=$pass psql "${args[@]}" <<< "$sql_cmd"
+    PGPASSWORD=$pass psql "${args[@]}" <<<"$sql_cmd"
 }
 
 ########################
@@ -1141,22 +1152,22 @@ postgresql_ensure_user_exists() {
     shift 1
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            -p|--password)
-                shift
-                password="${1:?missing password}"
-                ;;
-            --host)
-                shift
-                db_host="${1:?missing database host}"
-                ;;
-            --port)
-                shift
-                db_port="${1:?missing database port}"
-                ;;
-            *)
-                echo "Invalid command line flag $1" >&2
-                return 1
-                ;;
+        -p | --password)
+            shift
+            password="${1:?missing password}"
+            ;;
+        --host)
+            shift
+            db_host="${1:?missing database host}"
+            ;;
+        --port)
+            shift
+            db_port="${1:?missing database port}"
+            ;;
+        *)
+            echo "Invalid command line flag $1" >&2
+            return 1
+            ;;
         esac
         shift
     done
@@ -1228,22 +1239,22 @@ postgresql_ensure_database_exists() {
     shift 1
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            -u|--user)
-                shift
-                user="${1:?missing database user}"
-                ;;
-            --host)
-                shift
-                db_host="${1:?missing database host}"
-                ;;
-            --port)
-                shift
-                db_port="${1:?missing database port}"
-                ;;
-            *)
-                echo "Invalid command line flag $1" >&2
-                return 1
-                ;;
+        -u | --user)
+            shift
+            user="${1:?missing database user}"
+            ;;
+        --host)
+            shift
+            db_host="${1:?missing database host}"
+            ;;
+        --port)
+            shift
+            db_port="${1:?missing database port}"
+            ;;
+        *)
+            echo "Invalid command line flag $1" >&2
+            return 1
+            ;;
         esac
         shift
     done

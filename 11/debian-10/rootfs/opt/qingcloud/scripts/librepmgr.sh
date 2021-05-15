@@ -667,7 +667,7 @@ repmgr_initialize() {
     postgresql_enable_remote_connections
     # Configure port and restrict access to PostgreSQL (MD5)
     postgresql_set_property "port" "$POSTGRESQL_PORT_NUMBER"
-
+    postgresql_configure_synchronous_replication
     postgresql_configure_replication_parameters
     postgresql_configure_fsync
 

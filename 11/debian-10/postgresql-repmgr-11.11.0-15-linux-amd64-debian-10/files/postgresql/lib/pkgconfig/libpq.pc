@@ -1,0 +1,9 @@
+Name: libpq
+Description: PostgreSQL libpq library
+Url: http://www.postgresql.org/
+Version: 11.11
+Requires: 
+Requires.private: 
+Cflags: -I/opt/bitnami/postgresql/include
+Libs: -L/opt/bitnami/postgresql/lib -lpq
+Libs.private: -L/opt/bitnami/common/lib -L/opt/bitnami/postgresql/lib -L/opt/bitnami/repmgr/lib -lssl -lcrypto -lcrypt -lldap_r
