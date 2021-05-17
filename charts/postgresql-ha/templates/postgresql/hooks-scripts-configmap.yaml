@@ -46,9 +46,6 @@ data:
     unregister_deleted_nodes() {
         set -x
         local rlt=0
-        currenty_primary_node="$(repmgr_get_primary_node)"
-        currenty_primary_host="$(echo $currenty_primary_node | awk '{print $1}')"
-        currenty_primary_port="$(echo $currenty_primary_node | awk '{print $2}')"
         read -r -a nodes <<<"$(tr ',;' ' ' <<<"${REPMGR_PARTNER_NODES}")"
         query="select node_id,node_name from nodes;"
         query_rlt=$(echo "$query" | NO_ERRORS=true postgresql_remote_execute "$currenty_primary_node" "$currenty_primary_port" "$REPMGR_DATABASE" "$REPMGR_USERNAME" "$REPMGR_PASSWORD" "-tA")
@@ -86,6 +83,9 @@ data:
     # Prepare env vars for managing roles
     primary_node="$(repmgr_get_primary_node)"
     primary_host="$(echo $primary_node | awk '{print $1}')"
+
+    currenty_primary_host="$(echo $primary_node | awk '{print $1}')"
+    currenty_primary_port="$(echo $primary_node | awk '{print $2}')"
 
     # Stop postgresql for graceful exit.
     postgresql_stop
