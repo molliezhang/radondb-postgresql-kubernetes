@@ -402,7 +402,7 @@ postgresql_configure_synchronous_replication() {
     # _sync_nodes_except_myself=${_sync_nodes_except_myself#*,}
     if ((POSTGRESQL_NUM_SYNCHRONOUS_REPLICAS > 0)); then
         postgresql_set_property "synchronous_commit" "$POSTGRESQL_SYNCHRONOUS_COMMIT_MODE"
-        postgresql_set_property "synchronous_standby_names" "FIRST ${POSTGRESQL_NUM_SYNCHRONOUS_REPLICAS} (*)"
+        postgresql_set_property "synchronous_standby_names" "FIRST 1 (*)"
     fi
 }
 
