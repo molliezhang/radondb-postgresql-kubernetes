@@ -625,11 +625,18 @@ pgpool:
 
   ## Extra volumes to add to the deployment
   ##
-  extraVolumes: []
+  # extraVolumes: []
+  extraVolumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
 
   ## Extra volume mounts to add to the container
   ##
-  extraVolumeMounts: []
+  # extraVolumeMounts: [] Checking pgpool health.
+  extraVolumeMounts:
+    - name: dshm
+      mountPath: /dev/shm
 
   ## Extra init containers to add to the deployment
   ##
