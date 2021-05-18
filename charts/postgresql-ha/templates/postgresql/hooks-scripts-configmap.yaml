@@ -29,6 +29,9 @@ data:
     # Auxiliary functions
     is_new_primary_ready() {
         return_value=1
+        currenty_primary_node="$(repmgr_get_primary_node)"
+        currenty_primary_host="$(echo $currenty_primary_node | awk '{print $1}')"
+
         info "$currenty_primary_host != $REPMGR_NODE_NETWORK_NAME"
         if [[ $(echo $currenty_primary_node | wc -w) -eq 2 ]] && [[ "$currenty_primary_host" != "$REPMGR_NODE_NETWORK_NAME" ]]; then
             info "New primary detected, leaving the cluster..."
@@ -38,30 +41,7 @@ data:
         fi
         return $return_value
     }
-    #repmgr_unregister_standby
-    # REPMGR_NODE_NETWORK_NAME
-    unregister_deleted_nodes() {
-        set -x
-        local rlt=0
-        read -r -a nodes <<<"$(tr ',;' ' ' <<<"${REPMGR_PARTNER_NODES}")"
-        query="select node_id,node_name from nodes;"
-        query_rlt=$(echo "$query" | NO_ERRORS=true postgresql_remote_execute "$currenty_primary_host" "$currenty_primary_port" "$REPMGR_DATABASE" "$REPMGR_USERNAME" "$REPMGR_PASSWORD" "-tA")
-        read -r -a repmgr_nodes_info <<<"$(tr ',;\n' ' ' <<<"${query_rlt}")"
 
-        if ! [[ ${#repmgr_nodes_info[*]} = "${#nodes[*]}" ]]; then
-            for repmgr_node in ${repmgr_nodes_info[*]}; do
-                #    repmgr_node_id=$(echo ${repmgr_node}|awk -F'|' '{print $1}')
-                repmgr_node_name=$(echo "${repmgr_node}" | awk -F'|' '{print $2}')
-                if [[ ${REPMGR_NODE_NETWORK_NAME%%.*} = "$repmgr_node_name" ]]; then
-                    rlt=1
-                fi
-            done
-        fi
-        if [[ ${rlt} = 1 ]]; then
-            repmgr_unregister_standby
-        fi
-        set +x
-    }
     export MODULE="pre-stop-hook"
 
     if [[ "${BITNAMI_DEBUG}" == "true" ]]; then
@@ -81,11 +61,6 @@ data:
     primary_node="$(repmgr_get_primary_node)"
     primary_host="$(echo $primary_node | awk '{print $1}')"
 
-    currenty_primary_host="$(echo $primary_node | awk '{print $1}')"
-    currenty_primary_port="$(echo $primary_node | awk '{print $2}')"
-
-    # Unregister nodes that deleted
-    unregister_deleted_nodes
     # Stop postgresql for graceful exit.
     postgresql_stop
 
