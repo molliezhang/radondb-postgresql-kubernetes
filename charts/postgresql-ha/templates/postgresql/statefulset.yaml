@@ -121,7 +121,7 @@ spec:
           {{- $postgresqlHeadlessServiceName := printf "%s-headless" (include "postgresql-ha.postgresql" .) }}
           {{- $clusterDomain:= .Values.clusterDomain }}
           env:
-            - name: BITNAMI_DEBUG
+            - name: QINGCLOUD_DEBUG
               value: {{ ternary "true" "false" .Values.postgresqlImage.debug | quote }}
             # PostgreSQL configuration
             - name: POSTGRESQL_VOLUME_DIR

@@ -44,7 +44,7 @@ data:
 
     export MODULE="pre-stop-hook"
 
-    if [[ "${BITNAMI_DEBUG}" == "true" ]]; then
+    if [[ "${QINGCLOUD_DEBUG}" == "true" ]]; then
         info "Bash debug is on"
     else
         info "Bash debug is off"

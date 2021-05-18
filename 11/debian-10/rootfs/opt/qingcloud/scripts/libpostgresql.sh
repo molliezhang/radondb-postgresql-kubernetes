@@ -747,7 +747,7 @@ postgresql_start_bg() {
         pg_ctl_cmd+=("gosu" "$POSTGRESQL_DAEMON_USER")
     fi
     pg_ctl_cmd+=("$POSTGRESQL_BIN_DIR"/pg_ctl)
-    if [[ "${BITNAMI_DEBUG:-false}" = true ]] || [[ $pg_logs = true ]]; then
+    if [[ "${QINGCLOUD_DEBUG:-false}" = true ]] || [[ $pg_logs = true ]]; then
         "${pg_ctl_cmd[@]}" "start" "${pg_ctl_flags[@]}"
     else
         "${pg_ctl_cmd[@]}" "start" "${pg_ctl_flags[@]}" >/dev/null 2>&1
@@ -825,12 +825,12 @@ postgresql_master_init_db() {
     initdb_cmd+=("$POSTGRESQL_BIN_DIR/initdb")
     if [[ -n "${initdb_args[*]:-}" ]]; then
         info "Initializing PostgreSQL with ${initdb_args[*]} extra initdb arguments"
-        if [[ "${BITNAMI_DEBUG:-false}" = true ]]; then
+        if [[ "${QINGCLOUD_DEBUG:-false}" = true ]]; then
             "${initdb_cmd[@]}" -E UTF8 -D "$POSTGRESQL_DATA_DIR" -U "postgres" "${initdb_args[@]}"
         else
             "${initdb_cmd[@]}" -E UTF8 -D "$POSTGRESQL_DATA_DIR" -U "postgres" "${initdb_args[@]}" >/dev/null 2>&1
         fi
-    elif [[ "${BITNAMI_DEBUG:-false}" = true ]]; then
+    elif [[ "${QINGCLOUD_DEBUG:-false}" = true ]]; then
         "${initdb_cmd[@]}" -E UTF8 -D "$POSTGRESQL_DATA_DIR" -U "postgres"
     else
         "${initdb_cmd[@]}" -E UTF8 -D "$POSTGRESQL_DATA_DIR" -U "postgres" >/dev/null 2>&1
@@ -1027,7 +1027,7 @@ get_env_var_value() {
 # Stdin:
 #   Query/queries to execute
 # Globals:
-#   BITNAMI_DEBUG
+#   QINGCLOUD_DEBUG
 #   POSTGRESQL_*
 # Arguments:
 #   $1 - Database where to run the queries
@@ -1060,7 +1060,7 @@ postgresql_execute_print_output() {
 # Stdin:
 #   Query/queries to execute
 # Globals:
-#   BITNAMI_DEBUG
+#   QINGCLOUD_DEBUG
 #   POSTGRESQL_*
 # Arguments:
 #   $1 - Database where to run the queries
@@ -1071,7 +1071,7 @@ postgresql_execute_print_output() {
 #   None
 #########################
 postgresql_execute() {
-    if [[ "${BITNAMI_DEBUG:-false}" = true ]]; then
+    if [[ "${QINGCLOUD_DEBUG:-false}" = true ]]; then
         "postgresql_execute_print_output" "$@"
     elif [[ "${NO_ERRORS:-false}" = true ]]; then
         "postgresql_execute_print_output" "$@" 2>/dev/null
@@ -1085,7 +1085,7 @@ postgresql_execute() {
 # Stdin:
 #   Query/queries to execute
 # Globals:
-#   BITNAMI_DEBUG
+#   QINGCLOUD_DEBUG
 #   DB_*
 # Arguments:
 #   $1 - Remote PostgreSQL service hostname
@@ -1109,7 +1109,7 @@ postgresql_remote_execute_print_output() {
 # Stdin:
 #   Query/queries to execute
 # Globals:
-#   BITNAMI_DEBUG
+#   QINGCLOUD_DEBUG
 #   DB_*
 # Arguments:
 #   $1 - Remote PostgreSQL service hostname
@@ -1121,7 +1121,7 @@ postgresql_remote_execute_print_output() {
 # Returns:
 #   None
 postgresql_remote_execute() {
-    if [[ "${BITNAMI_DEBUG:-false}" = true ]]; then
+    if [[ "${QINGCLOUD_DEBUG:-false}" = true ]]; then
         "postgresql_remote_execute_print_output" "$@"
     elif [[ "${NO_ERRORS:-false}" = true ]]; then
         "postgresql_remote_execute_print_output" "$@" 2>/dev/null
