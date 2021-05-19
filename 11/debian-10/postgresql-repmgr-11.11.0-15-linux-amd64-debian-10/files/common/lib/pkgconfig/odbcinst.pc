@@ -1,4 +1,4 @@
-prefix=/opt/bitnami/common
+prefix=/opt/qingcloud/common
 exec_prefix=${prefix}
 includedir=${prefix}/include
 libdir=${exec_prefix}/lib

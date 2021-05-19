@@ -5,7 +5,7 @@
 #define ASCII_ENCODING "auto-search"
 
 /* Install bindir */
-#define BIN_PREFIX "/opt/bitnami/common/bin"
+#define BIN_PREFIX "/opt/qingcloud/common/bin"
 
 /* Use a semaphore to allow ODBCConfig to display running counts */
 /* #undef COLLECT_STATS */
@@ -19,7 +19,7 @@
 /* #undef C_ALLOCA */
 
 /* Lib directory */
-#define DEFLIB_PATH "/opt/bitnami/common/lib"
+#define DEFLIB_PATH "/opt/qingcloud/common/lib"
 
 /* Using perdriver iconv */
 /* #undef ENABLE_DRIVER_ICONV */
@@ -28,7 +28,7 @@
 #define ENABLE_INI_CACHING /**/
 
 /* Install exec_prefix */
-#define EXEC_PREFIX "/opt/bitnami/common"
+#define EXEC_PREFIX "/opt/qingcloud/common"
 
 /* Disable the precise but slow checking of the validity of handles */
 /* #undef FAST_HANDLE_VALIDATE */
@@ -351,10 +351,10 @@
 #define ICONV_CONST 
 
 /* Install includedir */
-#define INCLUDE_PREFIX "/opt/bitnami/common/include"
+#define INCLUDE_PREFIX "/opt/qingcloud/common/include"
 
 /* Lib directory */
-#define LIB_PREFIX "/opt/bitnami/common/lib"
+#define LIB_PREFIX "/opt/qingcloud/common/lib"
 
 /* Define if the OS needs help to load dependent libraries for dlopen(). */
 /* #undef LTDL_DLOPEN_DEPLIBS */
@@ -418,7 +418,7 @@
 #define PLATFORM64 /**/
 
 /* Install prefix */
-#define PREFIX "/opt/bitnami/common"
+#define PREFIX "/opt/qingcloud/common"
 
 /* Using QNX */
 /* #undef QNX_LIBLTDL */
@@ -450,10 +450,10 @@
 #define STRICT_ODBC_ERROR /**/
 
 /* System file path */
-#define SYSTEM_FILE_PATH "/opt/bitnami/common/etc"
+#define SYSTEM_FILE_PATH "/opt/qingcloud/common/etc"
 
 /* Lib path */
-#define SYSTEM_LIB_PATH "/opt/bitnami/common/lib"
+#define SYSTEM_LIB_PATH "/opt/qingcloud/common/lib"
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #define TIME_WITH_SYS_TIME 1

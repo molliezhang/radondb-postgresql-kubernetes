@@ -1,8 +1,8 @@
 CONFIG_VERSION=3.3.0
-CONFIG_INST_PREFIX=/opt/bitnami/postgresql
-CONFIG_INST_LIBS=-L/opt/bitnami/postgresql/lib -lgdal
-CONFIG_INST_CFLAGS=-I/opt/bitnami/postgresql/include
-CONFIG_INST_DATA=/opt/bitnami/postgresql/share/gdal
+CONFIG_INST_PREFIX=/opt/qingcloud/postgresql
+CONFIG_INST_LIBS=-L/opt/qingcloud/postgresql/lib -lgdal
+CONFIG_INST_CFLAGS=-I/opt/qingcloud/postgresql/include
+CONFIG_INST_DATA=/opt/qingcloud/postgresql/share/gdal
 prefix=${CONFIG_INST_PREFIX}
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib

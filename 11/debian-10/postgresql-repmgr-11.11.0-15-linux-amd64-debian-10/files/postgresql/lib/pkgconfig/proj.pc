@@ -1,4 +1,4 @@
-prefix=/opt/bitnami/postgresql
+prefix=/opt/qingcloud/postgresql
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

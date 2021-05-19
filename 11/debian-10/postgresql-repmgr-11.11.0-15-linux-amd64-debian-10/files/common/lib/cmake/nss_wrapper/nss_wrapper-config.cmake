@@ -1,1 +1,1 @@
-set(NSS_WRAPPER_LIBRARY /opt/bitnami/common/lib/libnss_wrapper.so)
+set(NSS_WRAPPER_LIBRARY /opt/qingcloud/common/lib/libnss_wrapper.so)

@@ -1,9 +1,9 @@
 #!/bin/sh
-CONFIG_LIBS="-L/opt/bitnami/postgresql/lib -lgdal"
-CONFIG_DEP_LIBS="-lcrypto -L/opt/bitnami/postgresql/lib -lgeos_c -L/opt/bitnami/postgresql/lib -lproj   -lsqlite3 -lz -lpthread -lm -lrt -ldl                -lxml2      "
-CONFIG_PREFIX="/opt/bitnami/postgresql"
-CONFIG_CFLAGS="-I/opt/bitnami/postgresql/include"
-CONFIG_DATA="/opt/bitnami/postgresql/share/gdal"
+CONFIG_LIBS="-L/opt/qingcloud/postgresql/lib -lgdal"
+CONFIG_DEP_LIBS="-lcrypto -L/opt/qingcloud/postgresql/lib -lgeos_c -L/opt/qingcloud/postgresql/lib -lproj   -lsqlite3 -lz -lpthread -lm -lrt -ldl                -lxml2      "
+CONFIG_PREFIX="/opt/qingcloud/postgresql"
+CONFIG_CFLAGS="-I/opt/qingcloud/postgresql/include"
+CONFIG_DATA="/opt/qingcloud/postgresql/share/gdal"
 CONFIG_VERSION="3.3.0"
 CONFIG_OGR_ENABLED=yes
 CONFIG_GNM_ENABLED=yes

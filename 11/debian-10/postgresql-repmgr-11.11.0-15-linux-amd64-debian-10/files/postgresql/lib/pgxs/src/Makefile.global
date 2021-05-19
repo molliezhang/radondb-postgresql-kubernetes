@@ -75,7 +75,7 @@ endif # not PGXS
 vpathsearch = `for f in $(addsuffix /$(1),$(subst :, ,. $(VPATH))); do test -r $$f && echo $$f && break; done`
 
 # Saved arguments from configure
-configure_args =  '--prefix=/opt/bitnami/postgresql' '--with-libedit-preferred' '--with-openssl' '--with-libxml' '--with-libxslt' '--with-readline' '--with-icu' '--with-uuid=e2fs' '--with-ldap' 'CC=gcc' 'CFLAGS=-s' 'LDFLAGS=-Wl,-rpath=/opt/bitnami/common/lib -L/opt/bitnami/common/lib -Wl,-rpath=/opt/bitnami/repmgr/lib -L/opt/bitnami/repmgr/lib -Wl,-rpath=/opt/bitnami/postgresql/lib -L/opt/bitnami/postgresql/lib' 'CPPFLAGS=-I/opt/bitnami/common/include -I/opt/bitnami/repmgr/include -I/opt/bitnami/postgresql/include'
+configure_args =  '--prefix=/opt/qingcloud/postgresql' '--with-libedit-preferred' '--with-openssl' '--with-libxml' '--with-libxslt' '--with-readline' '--with-icu' '--with-uuid=e2fs' '--with-ldap' 'CC=gcc' 'CFLAGS=-s' 'LDFLAGS=-Wl,-rpath=/opt/qingcloud/common/lib -L/opt/qingcloud/common/lib -Wl,-rpath=/opt/qingcloud/repmgr/lib -L/opt/qingcloud/repmgr/lib -Wl,-rpath=/opt/qingcloud/postgresql/lib -L/opt/qingcloud/postgresql/lib' 'CPPFLAGS=-I/opt/qingcloud/common/include -I/opt/qingcloud/repmgr/include -I/opt/qingcloud/postgresql/include'
 
 
 ##########################################################################
@@ -95,7 +95,7 @@ ifndef PGXS
 # Note that prefix, exec_prefix, and datarootdir aren't defined in a PGXS build;
 # makefiles may only use the derived variables such as bindir.
 
-prefix := /opt/bitnami/postgresql
+prefix := /opt/qingcloud/postgresql
 exec_prefix := ${prefix}
 datarootdir := ${prefix}/share
 
@@ -240,7 +240,7 @@ BITCODE_CXXFLAGS =  -O2
 # Compilers
 
 CPP = gcc -E
-CPPFLAGS = -I/opt/bitnami/common/include -I/opt/bitnami/repmgr/include -I/opt/bitnami/postgresql/include -D_GNU_SOURCE -I/usr/include/libxml2 
+CPPFLAGS = -I/opt/qingcloud/common/include -I/opt/qingcloud/repmgr/include -I/opt/qingcloud/postgresql/include -D_GNU_SOURCE -I/usr/include/libxml2 
 PG_SYSROOT = 
 
 override CPPFLAGS := $(ICU_CFLAGS) $(CPPFLAGS)
@@ -312,7 +312,7 @@ ifdef PGXS
 else
   LDFLAGS_INTERNAL = -L$(top_builddir)/src/port -L$(top_builddir)/src/common
 endif
-LDFLAGS = $(LDFLAGS_INTERNAL) -Wl,-rpath=/opt/bitnami/common/lib -L/opt/bitnami/common/lib -Wl,-rpath=/opt/bitnami/repmgr/lib -L/opt/bitnami/repmgr/lib -Wl,-rpath=/opt/bitnami/postgresql/lib -L/opt/bitnami/postgresql/lib  -Wl,--as-needed
+LDFLAGS = $(LDFLAGS_INTERNAL) -Wl,-rpath=/opt/qingcloud/common/lib -L/opt/qingcloud/common/lib -Wl,-rpath=/opt/qingcloud/repmgr/lib -L/opt/qingcloud/repmgr/lib -Wl,-rpath=/opt/qingcloud/postgresql/lib -L/opt/qingcloud/postgresql/lib  -Wl,--as-needed
 
 LDFLAGS_EX = 
 # LDFLAGS_SL might have already been assigned by calling makefile

@@ -4,6 +4,6 @@ Url: http://www.postgresql.org/
 Version: 11.11
 Requires: 
 Requires.private: libecpg libpgtypes
-Cflags: -I/opt/bitnami/postgresql/include
-Libs: -L/opt/bitnami/postgresql/lib -lecpg_compat
-Libs.private: -L/opt/bitnami/common/lib -L/opt/bitnami/postgresql/lib -L/opt/bitnami/repmgr/lib -lm
+Cflags: -I/opt/qingcloud/postgresql/include
+Libs: -L/opt/qingcloud/postgresql/lib -lecpg_compat
+Libs.private: -L/opt/qingcloud/common/lib -L/opt/qingcloud/postgresql/lib -L/opt/qingcloud/repmgr/lib -lm

@@ -1,5 +1,5 @@
 #!/bin/sh
-prefix=/opt/bitnami/postgresql
+prefix=/opt/qingcloud/postgresql
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 
@@ -32,13 +32,13 @@ case "$1" in
 esac
 case $1 in
     --prefix)
-    echo /opt/bitnami/postgresql
+    echo /opt/qingcloud/postgresql
      ;;
     --version)
     echo 3.8.2
      ;;
     --cflags)
-    echo -I/opt/bitnami/postgresql/include
+    echo -I/opt/qingcloud/postgresql/include
       ;;
     --libs)
       # TODO: make an alias for --clibs
@@ -61,7 +61,7 @@ case $1 in
       echo -L${exec_prefix}/lib
       ;;
     --includes)
-      echo /opt/bitnami/postgresql/include
+      echo /opt/qingcloud/postgresql/include
       ;;
     --jtsport)
     echo 1.13.0
