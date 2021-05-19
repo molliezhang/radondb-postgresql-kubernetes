@@ -19,6 +19,7 @@ RUN chmod g+rwX /opt/qingcloud
 COPY rootfs /
 RUN /opt/qingcloud/scripts/pgpool/postunpack.sh
 ENV QINGCLOUD_APP_NAME="pgpool" \
+
     QINGCLOUD_IMAGE_VERSION="4.2.2-debian-10-r72" \
     PATH="/opt/qingcloud/postgresql/bin:/opt/qingcloud/common/bin:/opt/qingcloud/pgpool/bin:$PATH" \
     POSTGRESQL_CLIENT_CREATE_DATABASE_NAME="" \

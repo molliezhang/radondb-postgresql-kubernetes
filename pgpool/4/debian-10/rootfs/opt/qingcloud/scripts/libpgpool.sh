@@ -46,6 +46,7 @@ export PGPOOL_ENABLE_POOL_PASSWD="${PGPOOL_ENABLE_POOL_PASSWD:-yes}"
 export PGPOOL_USER_CONF_FILE="${PGPOOL_USER_CONF_FILE:-}"
 export PGPOOL_PASSWD_FILE="${PGPOOL_PASSWD_FILE:-pool_passwd}"
 export PATH="${PGPOOL_BIN_DIR}:$PATH"
+export PGPOOL_NUM_INIT_CHILDREN="${PGPOOL_NUM_INIT_CHILDREN:-50}"
 
 # Users
 export PGPOOL_DAEMON_USER="pgpool"
@@ -400,7 +401,7 @@ pgpool_create_config() {
     pgpool_set_property "pcp_socket_dir" "$PGPOOL_TMP_DIR"
     # Connection Pooling settings
     # http://www.pgpool.net/docs/latest/en/html/runtime-config-connection-pooling.html
-    [[ -n "${PGPOOL_NUM_INIT_CHILDREN:-50}" ]] && pgpool_set_property "num_init_children" "$PGPOOL_NUM_INIT_CHILDREN"
+    [[ -n "${PGPOOL_NUM_INIT_CHILDREN:-}" ]] && pgpool_set_property "num_init_children" "$PGPOOL_NUM_INIT_CHILDREN"
     pgpool_set_property "max_pool" "$PGPOOL_MAX_POOL"
     [[ -n "${PGPOOL_CHILD_MAX_CONNECTIONS:-}" ]] && pgpool_set_property "child_max_connections" "$PGPOOL_CHILD_MAX_CONNECTIONS"
     [[ -n "${PGPOOL_CHILD_LIFE_TIME:-}" ]] && pgpool_set_property "child_life_time" "$PGPOOL_CHILD_LIFE_TIME"
