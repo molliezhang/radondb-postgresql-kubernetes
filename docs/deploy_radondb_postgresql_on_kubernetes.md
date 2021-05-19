@@ -38,11 +38,9 @@ git clone https://github.com/zhl003/radondb-postgresql-kubernetes.git
 
    ```bash
    <For Helm v2>
-    cd charts
     helm install . --name demo
 
    <For Helm v3>
-    cd charts
     helm install demo charts/postgresql-ha
   ```
 
