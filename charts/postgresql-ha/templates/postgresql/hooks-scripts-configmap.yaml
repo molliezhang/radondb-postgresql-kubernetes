@@ -91,7 +91,6 @@ data:
     else
         info "Standby node doesn't need to wait, leaving the cluster."
     # Unregister nodes that delete
-        unregister_deleted_nodes
+        repmgr_unregister_standby
     fi
 
-    exit 1
