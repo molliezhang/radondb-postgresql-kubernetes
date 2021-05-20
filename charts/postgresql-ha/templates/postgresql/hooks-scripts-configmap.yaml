@@ -81,14 +81,17 @@ data:
     currenty_primary_host="$(echo $primary_node | awk '{print $1}')"
     currenty_primary_port="$(echo $primary_node | awk '{print $2}')"
 
-    # Unregister nodes that deleted
-    unregister_deleted_nodes
+
     # Stop postgresql for graceful exit.
-    # postgresql_stop
+    postgresql_stop
 
     if [[ "$primary_host" == "$REPMGR_NODE_NETWORK_NAME" ]]; then
         info "Primary node need to wait for a new primary node before leaving the cluster"
         retry_while is_new_primary_ready 10 5
     else
         info "Standby node doesn't need to wait, leaving the cluster."
+    # Unregister nodes that delete
+        unregister_deleted_nodes
     fi
+
+    exit 1
