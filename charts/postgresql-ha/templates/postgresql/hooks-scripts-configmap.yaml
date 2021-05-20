@@ -38,27 +38,6 @@ data:
         fi
         return $return_value
     }
-    #repmgr_unregister_standby
-    # REPMGR_NODE_NETWORK_NAME
-    # unregister_deleted_nodes() {
-    #     local rlt=0
-    #     read -r -a nodes <<<"$(tr ',;' ' ' <<<"${REPMGR_PARTNER_NODES}")"
-    #     query="select node_id,node_name from nodes;"
-    #     query_rlt=$(echo "$query" | NO_ERRORS=true postgresql_remote_execute "$currenty_primary_host" "$currenty_primary_port" "$REPMGR_DATABASE" "$REPMGR_USERNAME" "$REPMGR_PASSWORD" "-tA")
-    #     read -r -a repmgr_nodes_info <<<"$(tr ',;\n' ' ' <<<"${query_rlt}")"
-    #     info "query_rlt: ${repmgr_nodes_info[*]} currenty_primary_host/port: ${currenty_primary_host} ${currenty_primary_port}"
-    #     if ! [[ ${#repmgr_nodes_info[*]} = "${#nodes[*]}" ]]; then
-    #         for repmgr_node in ${repmgr_nodes_info[*]}; do
-    #             repmgr_node_name=$(echo "${repmgr_node}" | awk -F'|' '{print $2}')
-    #             if [[ ${REPMGR_NODE_NETWORK_NAME%%.*} = "$repmgr_node_name" ]]; then
-    #                 rlt=1
-    #             fi
-    #         done
-    #     fi
-    #     if [[ ${rlt} = 1 ]]; then
-    #         repmgr_unregister_standby
-    #     fi
-    # }
     export MODULE="pre-stop-hook"
 
     if [[ "${QINGCLOUD_DEBUG}" == "true" ]]; then
@@ -87,7 +66,6 @@ data:
         info "Unregister standby nodes before leaving"
         # Unregister nodes that delete
         repmgr_unregister_standby
-        exit 1
     fi
     postgresql_stop
 
